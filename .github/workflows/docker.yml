@@ -26,14 +26,14 @@ jobs:
 
       - name: Convert repository name to lowercase
         run: |
-          echo "REPO_LOWER=${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+          echo "REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Build Image
         run: |
           docker build \
-            -t ghcr.io/${{ env.REPO_LOWER }}:latest \
+            -t ghcr.io/$REPO_LOWER:latest \
             .
 
       - name: Push Image
         run: |
-          docker push ghcr.io/${{ env.REPO_LOWER }}:latest
+          docker push ghcr.io/$REPO_LOWER:latest
